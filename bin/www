@@ -7,7 +7,7 @@
 require('dotenv').config();
 
 const app = require('../app');
-const debug = require('debug')('simple-chat:server');
+const debug = require('debug')('virus-game:server');
 const http = require('http');
 const SocketIO = require('socket.io');
 
@@ -23,36 +23,9 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = SocketIO(server);
 
-const players = {};
 
 //Connecting to io
-io.on('connection', (socket) => {
-    console.log('A player has connected!');
-
-    //Connecting to game
-    socket.on('player-connected', playerName => {
-      debug('Player connected to the game', playerName);
-
-      players[socket.id] = playerName;
-
-      //Broadcast when a player connects
-      socket.broadcast.emit('player-connected', playerName);
-    });
-
-
-    // Player disconnects from game.
-    socket.on('disconnect', () => {
-        debug(`Socket ${socket.id} left the game.`);
-        //Broadcast that player has left the game.
-        if (players[socket.id]) {
-          socket.broadcast.emit('player-disconnected', players[socket.id]);
-        };
-      
-        //Remove user from list
-        delete players[socket.id];
-    });
-
-});
+io.on('connection', require('../controllers/socket_controller'));
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -13,6 +13,10 @@ const addNoticeToGame = (notice) => {
     document.querySelector('#entry').appendChild(noticeEl);
 }
 
+const updateOlinePlayers = (players) => {
+    document.querySelector('#online-players').innerHTML = players.map(player => `<li class="player">${player}</li>`).join("");
+}
+
 playerEl.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -21,12 +25,21 @@ playerEl.addEventListener('submit', e => {
     //Remove input and button after submitting data.
     document.querySelector('#title').style.display = 'none';
     // document.querySelector('#enter-game').style.display = 'none';
-    document.querySelector('#name-entry').style.display ='none';
+    // document.querySelector('#name-entry').style.display ='none';
 
     //Emit player
-    socket.emit('player-connected', playerName.value);
+    socket.emit('player-connected', playerName.value, (status) => {
+        console.log("Server has seen the registration.", status);
+        if (status.joinChat) {
+            updateOlinePlayers(status.onlinePlayers);
+        }
+    });
 
     return false;
+});
+
+socket.on('online-players', (players) => {
+    updateOlinePlayers(players);
 });
 
 socket.on('player-connected', (playerName) => {
