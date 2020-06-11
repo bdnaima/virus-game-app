@@ -3,12 +3,18 @@ body {
 }
 
 .container {
-    margin: 20em;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10em;
 }
 
 #game-room {
     max-width: 20em;
     margin-bottom: 18em;
+}
+
+#player-form {
+    flex-direction: column;
 }
 
 #users {
@@ -21,6 +27,9 @@ body {
     margin-right: 1em;
 }
 
+#players {
+    border: 2px solid black
+}
 
 /* Tablet */
 @media screen and (max-width : 768px) {

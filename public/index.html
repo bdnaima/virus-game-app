@@ -12,19 +12,24 @@
 
 <body>
     <div class="container">
-       
+
         <div id="game-room">
             <ul id="entry" class="list-group"></ul>
         </div>
 
-        <h1 id="title">Catch the virus!</h1>
-        <form id="gamer-form" class="form-inline">
+        
+        <form id="player-form" class="form-inline">
+            <h1 id="title">Catch the virus!</h1>
             <div class="form-group">
                 <input type="text" class="form-control" id="name-entry" placeholder="Name">
                 <button type="submit" id="enter-game" class="btn btn-outline-success">Join Game</button>
             </div>
         </form>
 
+        <div id="players">
+            <p>Players online</p>
+            <ul id="online-players"></ul>
+        </div>
 
     </div>
 

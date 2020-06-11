@@ -23,22 +23,33 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = SocketIO(server);
 
+const players = {};
+
 //Connecting to io
 io.on('connection', (socket) => {
-    console.log('A gamer has connected!');
+    console.log('A player has connected!');
 
-    // Gamer enters game
-    socket.emit('message', "Welcome Naima!");
+    //Connecting to game
+    socket.on('player-connected', playerName => {
+      debug('Player connected to the game', playerName);
 
-    socket.on('player', (data) => {
-        io.sockets.emit('player', data)
+      players[socket.id] = playerName;
+
+      //Broadcast when a player connects
+      socket.broadcast.emit('player-connected', playerName);
     });
 
-    //Broadcast when a gamer connects
-    // Gamer disconnects from game.
+
+    // Player disconnects from game.
     socket.on('disconnect', () => {
-        console.log('A gamer has left the game.');
-        io.emit('message', "A gamer has left the game.")
+        debug(`Socket ${socket.id} left the game.`);
+        //Broadcast that player has left the game.
+        if (players[socket.id]) {
+          socket.broadcast.emit('player-disconnected', players[socket.id]);
+        };
+      
+        //Remove user from list
+        delete players[socket.id];
     });
 
 });

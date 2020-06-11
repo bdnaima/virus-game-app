@@ -1,16 +1,40 @@
 const socket = io();
 
+const playerEl = document.querySelector('#player-form');
 
-document.querySelector('#gamer-form').addEventListener('submit', e => {
+let playerName = null;
+
+const addNoticeToGame = (notice) => {
+    const noticeEl = document.createElement('li');
+    noticeEl.classList.add('list-group-item', 'list-group-item-light', 'notice');
+
+    noticeEl.innerHTML = notice;
+
+    document.querySelector('#entry').appendChild(noticeEl);
+}
+
+playerEl.addEventListener('submit', e => {
     e.preventDefault();
 
+    playerName = document.querySelector("#name-entry")
+    
+    //Remove input and button after submitting data.
     document.querySelector('#title').style.display = 'none';
-    const nameEl = document.querySelector("#name-entry");
+    // document.querySelector('#enter-game').style.display = 'none';
+    document.querySelector('#name-entry').style.display ='none';
 
-    socket.emit('player', nameEl.value );
-    nameEl.value = '';
+    //Emit player
+    socket.emit('player-connected', playerName.value);
 
     return false;
+});
+
+socket.on('player-connected', (playerName) => {
+    addNoticeToGame(`${playerName} joined the game.` )
+});
+
+socket.on('player-disconnected', (playerName) => {
+    addNoticeToGame(`${playerName} left the game.` )
 });
 
 socket.on('player', (data) => {
