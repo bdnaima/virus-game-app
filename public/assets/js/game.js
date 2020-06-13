@@ -6,7 +6,7 @@ let playerName = null;
 
 const addNoticeToGame = (notice) => {
     const noticeEl = document.createElement('li');
-    noticeEl.classList.add('list-group-item', 'list-group-item-light', 'notice');
+    noticeEl.classList.add('list-group-item', 'list-group-item-light');
 
     noticeEl.innerHTML = notice;
 
@@ -14,7 +14,7 @@ const addNoticeToGame = (notice) => {
 }
 
 const updateOlinePlayers = (players) => {
-    document.querySelector('#online-players').innerHTML = players.map(player => `<li class="player">${player}</li>`).join("");
+    document.querySelector('#online-players').innerHTML = players.map(player => `<li class="list-group-item" style="background-color: green; color: white; font-weight: bold">${player}</li>`)
 }
 
 playerEl.addEventListener('submit', e => {
@@ -24,8 +24,8 @@ playerEl.addEventListener('submit', e => {
     
     //Remove input and button after submitting data.
     document.querySelector('#title').style.display = 'none';
-    // document.querySelector('#enter-game').style.display = 'none';
-    // document.querySelector('#name-entry').style.display ='none';
+    document.querySelector('#enter-game').style.display = 'none';
+    document.querySelector('#name-entry').style.display ='none';
 
     //Emit player
     socket.emit('player-connected', playerName.value, (status) => {
@@ -38,6 +38,17 @@ playerEl.addEventListener('submit', e => {
     return false;
 });
 
+const button = document.querySelector("#start-game");
+
+button.addEventListener('click', () => {
+    // between 1,000 and 10,000 milliseconds
+    const result = Math.random() * 9000 + 1000;
+
+    setTimeout(() => {    
+        document.querySelector("#virus-game").innerHTML = `<img src="assets/pictures/virus.jpg">`;
+    }, result);
+});
+
 socket.on('online-players', (players) => {
     updateOlinePlayers(players);
 });
@@ -48,8 +59,4 @@ socket.on('player-connected', (playerName) => {
 
 socket.on('player-disconnected', (playerName) => {
     addNoticeToGame(`${playerName} left the game.` )
-});
-
-socket.on('player', (data) => {
-    document.querySelector("#entry").innerHTML += `<li class="list-group-item"><strong>${data}</strong> joined the game</li>`;
 });

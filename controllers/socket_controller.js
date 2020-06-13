@@ -1,7 +1,6 @@
 /**
  * Socket Controller
  */
-const debug = require('debug')('virus-game:socket_controller');
 const players = {};
 
 // Get online players names
@@ -13,7 +12,7 @@ function getOlinePlayers() {
 
 // Handle player connection
 function handlePlayerConnect(playerName, callback) {
-    debug('Player connected to the game', playerName);
+    console.log('Player connected to the game', playerName);
     players[this.id] = playerName;
     callback({
         joinChat: true,
@@ -28,7 +27,7 @@ function handlePlayerConnect(playerName, callback) {
 // Handle when player disconnect
 function handlePlayerDisconnect() {
 
-    debug(`Socket ${this.id} left the game.`);
+    console.log(`Socket ${this.id} left the game.`);
     //Broadcast that player has left the game.
     if (players[this.id]) {
         this.broadcast.emit('player-disconnected', players[this.id]);
@@ -40,7 +39,7 @@ function handlePlayerDisconnect() {
 
 // Handle 
 function handleGameImage(image) {
-    debug('This is an image', image);
+    console.log('This is an image', image);
 
     this.broadcast.emit('image', image);
 }
