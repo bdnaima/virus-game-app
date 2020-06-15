@@ -17,26 +17,7 @@ const showPlayerNames = (playerNames) => {
         ${player}
     </li>`);
 
-    if (playerNames.length > 1) {
 
-        //Display button to start the game
-        displayGame = displayGame.innerHTML = '<button type="submit" id="start-game" class="btn btn-outline-success" style="display: initial;">Start Game</button>'
-
-        // Start game when two users have joined the game
-        const button = document.querySelector("#start-game");
-
-        button.addEventListener('click', () => {
-
-            // between 1,000 and 10,000 milliseconds
-            const result = Math.random() * 9000 + 1000;
-
-            setTimeout(() => {    
-                document.querySelector("#virus-game").innerHTML = `<img src="assets/pictures/virus.jpg">`;
-
-            }, result);
-
-        });
-    }
 };
 
 // Player inputs name and enters game-room
@@ -50,18 +31,24 @@ playerEl.addEventListener('submit', e => {
     document.querySelector('#enter-game').style.display = 'none';
     document.querySelector('#name-entry').style.display ='none';
 
-   showPlayerNames([playerName]);
+    showPlayerNames([playerName]);
 
-   socket.emit('online-players', playerName);
-   
+    socket.emit('online-players', playerName);
+
 });
-
-
-
 
 socket.on('online-players', (playerNames) => {
     console.log(playerNames);
     showPlayerNames(playerNames);
+});
+
+socket.on('start-game', () =>{
+    // between 1,000 and 10,000 milliseconds
+    const result = Math.random() * 9000 + 1000;
+
+    setTimeout(() => {    
+        document.querySelector("#virus-game").innerHTML = `<img src="assets/pictures/virus.jpg">`;
+    }, result);
 });
 
 socket.on('disconnected-player', (playerNames) => {

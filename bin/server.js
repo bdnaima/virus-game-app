@@ -16,10 +16,17 @@ app.use(express.static('public'));
 io.on('connect', (socket) => {
     let playerName = null;
 
+    socket.emit('online-players', playerNames);
+
     socket.on('online-players', (name) => {
         playerName = name;
         playerNames.push(name)
         io.emit('online-players', playerNames)
+
+        if (playerNames.length == 2) {
+            console.log("You are getting closer!")
+            io.emit('start-game')
+        };
     });
 
 
