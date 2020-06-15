@@ -1,12 +1,11 @@
-body {
-    background-color: purple;
-}
 
 .container {
     display: flex;
     justify-content: space-between;
     margin-top: 10em;
     border: 2px solid black;
+    border-radius: 20px;
+    background-color: indigo;
     padding: 2em;
 }
 
@@ -31,7 +30,21 @@ body {
 
 #players {
     border: 2px solid black;
+    border-radius: 20px;
     padding: 2em;
+}
+
+.form-group {
+    margin-top: 5em;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 0;
+}
+
+h2 {
+    color: white;
 }
 
 img {
@@ -42,8 +55,27 @@ img {
 
 /* Tablet */
 @media screen and (max-width : 768px) {
+
     .container {
-        margin: 5em;
+        flex-direction: column;
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    #game-room {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2em;
+    }
+
+    #players {
+        margin-top: 2em;
+        padding: 1em;
     }
 }
   

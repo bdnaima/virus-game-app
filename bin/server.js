@@ -6,6 +6,8 @@ const server = http.createServer(app);
 const io = SocketIO(server);
 let playerNames = [];
 
+
+
 app.use(express.static('public'));
 
 
@@ -19,6 +21,8 @@ io.on('connect', (socket) => {
         playerNames.push(name)
         io.emit('online-players', playerNames)
     });
+
+
 
     socket.on('disconnect', () => {
         playerNames = playerNames.filter(name => name != playerName);
