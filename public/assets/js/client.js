@@ -3,12 +3,13 @@ const socket = io();
 const playerEl = document.querySelector('#player-form');
 
 let playerName = null;
+let playerTwo = null;
 
 
 // Player's online list is updated
 const showPlayerNames = (playerNames) => {
-    document.querySelector('#online-players').innerHTML = playerNames.map(player => `
-    <li
+    document.querySelector('#online-players').innerHTML = playerNames.map(player =>
+    `<li
         class="list-group-item"
         style="background-color: green; color: white; font-weight: bold">
         ${player}
@@ -46,6 +47,12 @@ button.addEventListener('click', () => {
 
 });
 
-socket.on('online-players', (playerName) => {
-    showPlayerNames([playerName]);
+
+socket.on('online-players', (playerNames) => {
+    console.log(playerNames);
+    showPlayerNames(playerNames);
+});
+
+socket.on('disconnected-player', (playerNames) => {
+    showPlayerNames(playerNames);
 });
