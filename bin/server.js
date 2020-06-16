@@ -5,13 +5,13 @@ const SocketIO = require('socket.io');
 const server = http.createServer(app);
 const io = SocketIO(server);
 let playerNames = [];
-
+let playerClicks = 0;
 
 app.use(express.static('public'));
 
 // Fired upon a connection from client.
 io.on('connect', (socket) => {
-    let playerName = null;
+    let playerName 
 
     socket.emit('online-players', playerNames);
 
@@ -26,15 +26,27 @@ io.on('connect', (socket) => {
             let time = Math.random() * 4000 + 1000;
             let position = Math.random() * 100;
 
-            
-            console.log(position)
-
             setTimeout(() => {
                 io.emit('show-virus', position);
             }, time);
-
-
         };
+
+         //Change position after player clicks image.
+         socket.on('player-clicks', () => {
+             playerClicks = playerClicks + 1;
+             
+             // if player clicks 10 times, game ends.
+             if (playerClicks == 10 ) {
+                 console.log("Game ended");
+             };
+            console.log(playerClicks);
+            let time = Math.random() * 4000 + 1000;
+            let position = Math.random() * 100;
+
+            setTimeout(() => {
+            io.emit('show-virus', position);
+            }, time);
+        })
 
     });
 

@@ -16,7 +16,9 @@ const showPlayerNames = (playerNames) => {
     </li>`);
 };
 
-
+const showWinner = () => {
+    document.querySelector('virus-game').innerHTML = "<p>This player won.</p>"
+}
 
 // Player inputs name and enters game-room
 playerEl.addEventListener('submit', e => {
@@ -48,10 +50,14 @@ socket.on('show-virus', (position) => {
     document.querySelector('#players').style.display = 'none';
     document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${position}%; left: ${position}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
 });
-
+// when client clicks, let server know that client has clicked
 function imgDisappear() {
+    
+    socket.emit('player-clicks', showWinner);
+    showWinner();
+    /*
     const clickInSeconds = new Date();
-    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;
+    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;*/
 };
 
 
