@@ -42,14 +42,21 @@ socket.on('online-players', (playerNames) => {
     showPlayerNames(playerNames);
 });
 
+
 socket.on('start-game', () =>{
     // between 1,000 and 10,000 milliseconds
     const result = Math.random() * 9000 + 1000;
 
     setTimeout(() => {    
-        document.querySelector("#virus-game").innerHTML = `<img src="assets/pictures/virus.jpg">`;
+        document.querySelector("#virus-game").innerHTML = `<img onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
     }, result);
+    
 });
+
+function imgDisappear() {
+    document.querySelector('#virus-game').innerHTML = `<p>Virus has been exterminated!</p>`;
+};
+
 
 socket.on('disconnected-player', (playerNames) => {
     showPlayerNames(playerNames);
