@@ -14,9 +14,9 @@ const showPlayerNames = (playerNames) => {
         style="background-color: green; color: white; font-weight: bold">
         ${player}
     </li>`);
-
-
 };
+
+
 
 // Player inputs name and enters game-room
 playerEl.addEventListener('submit', e => {
@@ -44,12 +44,13 @@ socket.on('online-players', (playerNames) => {
 socket.on('start-game', () => {
 });
 
-socket.on('show-virus', () => {
-    document.querySelector("#virus-game").innerHTML =`<img "onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
+socket.on('show-virus', (position) => {
+    document.querySelector('#players').style.display = 'none';
+    document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${position}%; left: ${position}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
 });
 
 function imgDisappear() {
-    const clickInSeconds = new Date()
+    const clickInSeconds = new Date();
     document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;
 };
 

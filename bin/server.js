@@ -23,10 +23,15 @@ io.on('connect', (socket) => {
         if (playerNames.length == 2) {
             io.emit('start-game');
 
-            let result = Math.random() * 9000 + 1000;
+            let time = Math.random() * 4000 + 1000;
+            let position = Math.random() * 100;
+
+            
+            console.log(position)
+
             setTimeout(() => {
-                io.emit('show-virus')
-            }, result);
+                io.emit('show-virus', position);
+            }, time);
 
 
         };
