@@ -5,8 +5,6 @@ const playerEl = document.querySelector('#player-form');
 let playerName = null;
 let playerTwo = null;
 
-let displayGame = document.querySelector('#virus-game')
-
 
 // Player's online list is updated
 const showPlayerNames = (playerNames) => {
@@ -43,18 +41,16 @@ socket.on('online-players', (playerNames) => {
 });
 
 
-socket.on('start-game', () =>{
-    // between 1,000 and 10,000 milliseconds
-    const result = Math.random() * 9000 + 1000;
+socket.on('start-game', () => {
+});
 
-    setTimeout(() => {    
-        document.querySelector("#virus-game").innerHTML = `<img onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
-    }, result);
-    
+socket.on('show-virus', () => {
+    document.querySelector("#virus-game").innerHTML =`<img "onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
 });
 
 function imgDisappear() {
-    document.querySelector('#virus-game').innerHTML = `<p>Virus has been exterminated!</p>`;
+    const clickInSeconds = new Date()
+    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;
 };
 
 

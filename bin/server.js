@@ -7,10 +7,7 @@ const io = SocketIO(server);
 let playerNames = [];
 
 
-
 app.use(express.static('public'));
-
-
 
 // Fired upon a connection from client.
 io.on('connect', (socket) => {
@@ -24,12 +21,17 @@ io.on('connect', (socket) => {
         io.emit('online-players', playerNames)
 
         if (playerNames.length == 2) {
-            console.log("You are getting closer!")
-            io.emit('start-game')
+            io.emit('start-game');
+
+            let result = Math.random() * 9000 + 1000;
+            setTimeout(() => {
+                io.emit('show-virus')
+            }, result);
+
+
         };
+
     });
-
-
 
     socket.on('disconnect', () => {
         playerNames = playerNames.filter(name => name != playerName);
