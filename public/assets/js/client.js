@@ -3,11 +3,11 @@ const socket = io();
 const playerEl = document.querySelector('#player-form');
 
 let playerName = null;
-let playerTwo = null;
 
 
 // Player's online list is updated
-const showPlayerNames = (playerNames) => {
+const showPlayerNames = (joinedPlayers) => {
+    const playerNames = Object.keys(joinedPlayers);
     document.querySelector('#online-players').innerHTML = playerNames.map(player =>
     `<li
         class="list-group-item"
@@ -16,9 +16,6 @@ const showPlayerNames = (playerNames) => {
     </li>`);
 };
 
-const showWinner = () => {
-    document.querySelector('virus-game').innerHTML = "<p>This player won.</p>"
-}
 
 // Player inputs name and enters game-room
 playerEl.addEventListener('submit', e => {
@@ -28,23 +25,17 @@ playerEl.addEventListener('submit', e => {
     
     //Remove input and button after submitting data.
     document.querySelector('#title').style.display = 'none';
+    document.querySelector('#twoPlayers').style.display = 'none';
     document.querySelector('#enter-game').style.display = 'none';
-    document.querySelector('#name-entry').style.display ='none';
+    document.querySelector('#name-entry').style.display ='none';  
 
-    showPlayerNames([playerName]);
-
-    socket.emit('online-players', playerName);
-
+    socket.emit('join', playerName);
 });
 
-socket.on('online-players', (playerNames) => {
-    console.log(playerNames);
-    showPlayerNames(playerNames);
+socket.on('joined-players', (joinedPlayers) => {
+    showPlayerNames(joinedPlayers);
 });
 
-
-socket.on('start-game', () => {
-});
 
 socket.on('show-virus', (position) => {
     document.querySelector('#players').style.display = 'none';
@@ -52,15 +43,19 @@ socket.on('show-virus', (position) => {
 });
 // when client clicks, let server know that client has clicked
 function imgDisappear() {
-    
-    socket.emit('player-clicks', showWinner);
-    showWinner();
-    /*
-    const clickInSeconds = new Date();
-    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;*/
+
+    document.querySelector("#virus-game").innerHTML =`<img style="display: none;" src="assets/pictures/virus.jpg">`;
+
+    socket.emit('player-clicks');
+
 };
 
+socket.on('winner', (theWinner, score, total) => {   
+    document.querySelector("#virus-game").innerHTML = `<p>${theWinner} won the game with ${score} out of ${total}.</p>`;
+    
+});
 
-socket.on('disconnected-player', (playerNames) => {
-    showPlayerNames(playerNames);
+socket.on('tie', () => {
+    document.querySelector("#virus-game").innerHTML = `<p>You tied!</p>`;
+
 });

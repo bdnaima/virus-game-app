@@ -4,8 +4,12 @@ const http = require('http');
 const SocketIO = require('socket.io');
 const server = http.createServer(app);
 const io = SocketIO(server);
-let playerNames = [];
-let playerClicks = 0;
+
+let joinedPlayers = {};
+let firstClick = false;
+let round = 0;
+
+const TOTALROUNDS = 10;
 
 app.use(express.static('public'));
 
@@ -13,15 +17,15 @@ app.use(express.static('public'));
 io.on('connect', (socket) => {
     let playerName 
 
-    socket.emit('online-players', playerNames);
+    socket.emit('joined-players', joinedPlayers);
 
-    socket.on('online-players', (name) => {
+    socket.on('join', (name) => {
         playerName = name;
-        playerNames.push(name)
-        io.emit('online-players', playerNames)
+        joinedPlayers[name] = 0;
 
-        if (playerNames.length == 2) {
-            io.emit('start-game');
+        io.emit('joined-players', joinedPlayers)
+
+        if (Object.keys(joinedPlayers).length == 2) {
 
             let time = Math.random() * 4000 + 1000;
             let position = Math.random() * 100;
@@ -32,28 +36,48 @@ io.on('connect', (socket) => {
         };
 
          //Change position after player clicks image.
-         socket.on('player-clicks', () => {
-             playerClicks = playerClicks + 1;
-             
-             // if player clicks 10 times, game ends.
-             if (playerClicks == 10 ) {
-                 console.log("Game ended");
-             };
-            console.log(playerClicks);
-            let time = Math.random() * 4000 + 1000;
-            let position = Math.random() * 100;
+        socket.on('player-clicks', () => {
 
-            setTimeout(() => {
-            io.emit('show-virus', position);
-            }, time);
-        })
+            if(firstClick == false) {
+                joinedPlayers[name] = joinedPlayers[name] + 1
+                firstClick = true;
+                
+                if(round == TOTALROUNDS) {
+                    const players = Object.keys(joinedPlayers);
+                    const playerOne = players[0];
+                    const playerTwo = players[1];
+                    const scoreOne = joinedPlayers[playerOne];
+                    const scoreTwo = joinedPlayers[playerTwo];
+                
+                    if (scoreOne > scoreTwo) {
+                       io.emit('winner', playerOne, scoreOne, TOTALROUNDS)
+                    } else if (scoreTwo > scoreOne) {
+                       io.emit('winner', playerTwo, scoreTwo, TOTALROUNDS);
+                    } else {
+                       io.emit('tie')
+                    };
 
+                    joinedPlayers = {};
+                    firstClick = false;
+                    round = 0;
+
+                } else {
+                    let time = Math.random() * 3000 + 1000;
+                    let position = Math.random() * 80;
+
+                    setTimeout(() => {
+                        firstClick = false;
+                        round = round + 1
+                        io.emit('show-virus', position);
+                    }, time);
+                }
+            };
+        });
     });
 
     socket.on('disconnect', () => {
-        playerNames = playerNames.filter(name => name != playerName);
-        console.log("player has left");
-        io.emit('disconnected-player', playerNames);
+        delete joinedPlayers[playerName]
+        io.emit('joined-players', joinedPlayers);
     });
 });
 
