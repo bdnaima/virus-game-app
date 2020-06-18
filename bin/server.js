@@ -43,7 +43,7 @@ io.on('connect', (socket) => {
                 firstClick = true;
 
                 if(round == TOTALROUNDS) {
-                    players = Object.keys(joinedPlayers);
+                    const players = Object.keys(joinedPlayers);
                     const playerOne = players[0];
                     const playerTwo = players[1];
                     const scoreOne = joinedPlayers[playerOne];
