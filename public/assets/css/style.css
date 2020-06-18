@@ -1,13 +1,14 @@
 body {
-    background-color: purple;
+    background-color: navy;
 }
 .container {
+    background-image: url("../pictures/flow_blue.jpg");
     display: flex;
     position: relative;
     justify-content: space-between;
     border: 2px solid black;
     border-radius: 20px;
-    background-color: indigo;
+    
     padding: 16em;
 }
 
@@ -33,6 +34,7 @@ body {
 #players {
     border: 2px solid black;
     border-radius: 20px;
+    margin-left: 2em;
     padding: 2em;
 }
 
@@ -41,12 +43,12 @@ body {
 }
 
 h1 {
-    color: white;
     margin-bottom: 0;
 }
 
-h2, p {
-    color: white;
+p {
+    margin-right: 6em;
+    font-weight: bold;
 }
 
 img {
@@ -57,6 +59,13 @@ img {
 
 @media screen and (max-width : 768px) {
     .container {
+        flex-direction: column;
         padding: 0;
+        padding-bottom: 10em;
+        text-align: center;
+    }
+
+    #players {
+        margin-left: 0;
     }
 }

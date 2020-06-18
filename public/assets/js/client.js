@@ -34,28 +34,38 @@ playerEl.addEventListener('submit', e => {
 
 socket.on('joined-players', (joinedPlayers) => {
     showPlayerNames(joinedPlayers);
+   
 });
 
 
 socket.on('show-virus', (position) => {
     document.querySelector('#players').style.display = 'none';
     document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${position}%; left: ${position}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
+
 });
+
+
 // when client clicks, let server know that client has clicked
 function imgDisappear() {
-
     document.querySelector("#virus-game").innerHTML =`<img style="display: none;" src="assets/pictures/virus.jpg">`;
+    
+    const clickInSeconds = new Date();
+    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;
 
     socket.emit('player-clicks');
 
 };
 
+socket.on('player-clicks', () => {
+    document.querySelector('#virus-gmae').innerHTML = `<p>${playerName} clicked first.</p>`
+});
+
 socket.on('winner', (theWinner, score, total) => {   
-    document.querySelector("#virus-game").innerHTML = `<p>${theWinner} won the game with ${score} out of ${total}.</p>`;
+    document.querySelector("#virus-game").innerHTML = `<h2>${theWinner} won the game with ${score} out of ${total} points!</h2>`;
     
 });
 
 socket.on('tie', () => {
-    document.querySelector("#virus-game").innerHTML = `<p>You tied!</p>`;
+    document.querySelector("#virus-game").innerHTML = `<h2>You tied!</h2>`;
 
 });

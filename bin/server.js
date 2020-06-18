@@ -8,7 +8,6 @@ const io = SocketIO(server);
 let joinedPlayers = {};
 let firstClick = false;
 let round = 0;
-
 const TOTALROUNDS = 10;
 
 app.use(express.static('public'));
@@ -40,15 +39,16 @@ io.on('connect', (socket) => {
 
             if(firstClick == false) {
                 joinedPlayers[name] = joinedPlayers[name] + 1
+
                 firstClick = true;
-                
+
                 if(round == TOTALROUNDS) {
-                    const players = Object.keys(joinedPlayers);
+                    players = Object.keys(joinedPlayers);
                     const playerOne = players[0];
                     const playerTwo = players[1];
                     const scoreOne = joinedPlayers[playerOne];
                     const scoreTwo = joinedPlayers[playerTwo];
-                
+                    
                     if (scoreOne > scoreTwo) {
                        io.emit('winner', playerOne, scoreOne, TOTALROUNDS)
                     } else if (scoreTwo > scoreOne) {
