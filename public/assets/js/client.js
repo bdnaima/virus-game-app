@@ -41,7 +41,7 @@ let startTime;
 
 socket.on('show-virus', (positionX, positionY) => {
     document.querySelector('#players').style.display = 'none';
-    document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${positionX}%; left: ${positionY}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
+    document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${positionY}%; left: ${positionX}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
     startTime = Date.now()
 });
 

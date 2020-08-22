@@ -7,7 +7,7 @@ const io = SocketIO(server);
 
 let joinedPlayers = {};
 let firstClick = false;
-let round = 0;
+let round = 1;
 const TOTALROUNDS = 10;
 
 app.use(express.static('public'));
@@ -22,15 +22,17 @@ io.on('connect', (socket) => {
         playerName = name;
         joinedPlayers[name] = 0;
 
+
         io.emit('joined-players', joinedPlayers)
 
         if (Object.keys(joinedPlayers).length == 2) {
 
             let time = Math.random() * 4000 + 1000;
             let positionX = Math.random() * 100;
+            let positionY = Math.random() * 100;
 
             setTimeout(() => {
-                io.emit('show-virus', positionX);
+                io.emit('show-virus', positionX, positionY);
             }, time);
         };
 
@@ -61,17 +63,18 @@ io.on('connect', (socket) => {
 
                     joinedPlayers = {};
                     firstClick = false;
-                    round = 0;
+                    round = 1;
 
                 } else {
                     let time = Math.random() * 3000 + 1000;
                     let positionY = Math.random() * 100;
+                    let positionX = Math.random() * 100;
                     
 
                     setTimeout(() => {
                         firstClick = false;
                         round = round + 1
-                        io.emit('show-virus', positionY);
+                        io.emit('show-virus', positionX, positionY);
                     }, time);
 
                 }
