@@ -37,27 +37,30 @@ socket.on('joined-players', (joinedPlayers) => {
    
 });
 
+let startTime;
 
-socket.on('show-virus', (position) => {
+socket.on('show-virus', (positionX, positionY) => {
     document.querySelector('#players').style.display = 'none';
-    document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${position}%; left: ${position}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
-
+    document.querySelector("#virus-game").innerHTML =`<img style="position: absolute; top: ${positionX}%; left: ${positionY}%;" onclick= "imgDisappear()" src="assets/pictures/virus.jpg">`;
+    startTime = Date.now()
 });
 
-
 // when client clicks, let server know that client has clicked
+
 function imgDisappear() {
+    let endTime = Date.now()
+    let clickedInSeconds = endTime - startTime
+
     document.querySelector("#virus-game").innerHTML =`<img style="display: none;" src="assets/pictures/virus.jpg">`;
-    
-    const clickInSeconds = new Date();
-    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickInSeconds.getSeconds()} seconds</p>`;
+
+    document.querySelector('#virus-game').innerHTML = `<p>You clicked in: ${clickedInSeconds / 1000} seconds</p>`;
 
     socket.emit('player-clicks');
 
 };
 
-socket.on('player-clicks', () => {
-    document.querySelector('#virus-gmae').innerHTML = `<p>${playerName} clicked first.</p>`
+socket.on('disappear', () => {
+    document.querySelector("#virus-game").innerHTML =`<img style="display: none;" src="assets/pictures/virus.jpg">`;
 });
 
 socket.on('winner', (theWinner, score, total) => {   

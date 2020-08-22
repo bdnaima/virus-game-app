@@ -27,15 +27,17 @@ io.on('connect', (socket) => {
         if (Object.keys(joinedPlayers).length == 2) {
 
             let time = Math.random() * 4000 + 1000;
-            let position = Math.random() * 100;
+            let positionX = Math.random() * 100;
 
             setTimeout(() => {
-                io.emit('show-virus', position);
+                io.emit('show-virus', positionX);
             }, time);
         };
 
          //Change position after player clicks image.
         socket.on('player-clicks', () => {
+
+            socket.broadcast.emit("disappear")
 
             if(firstClick == false) {
                 joinedPlayers[name] = joinedPlayers[name] + 1
@@ -63,13 +65,15 @@ io.on('connect', (socket) => {
 
                 } else {
                     let time = Math.random() * 3000 + 1000;
-                    let position = Math.random() * 80;
+                    let positionY = Math.random() * 100;
+                    
 
                     setTimeout(() => {
                         firstClick = false;
                         round = round + 1
-                        io.emit('show-virus', position);
+                        io.emit('show-virus', positionY);
                     }, time);
+
                 }
             };
         });
