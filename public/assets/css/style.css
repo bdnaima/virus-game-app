@@ -1,14 +1,13 @@
 body {
-    background-color: navy;
+    background-color: green;
 }
 .container {
-    background-image: url("../pictures/flow_blue.jpg");
+    background-image: url("../pictures/coronavirus.jpg");
     display: flex;
     position: relative;
     justify-content: space-between;
     border: 2px solid black;
     border-radius: 20px;
-    
     padding: 16em;
 }
 
@@ -19,6 +18,7 @@ body {
 
 #player-form {
     flex-direction: column;
+    margin-top: -5rem;
 }
 
 #users {
@@ -36,19 +36,30 @@ body {
     border-radius: 20px;
     margin-left: 2em;
     padding: 2em;
+    color: white;
 }
 
 .form-group {
     margin-top: 5em;
 }
 
+.btn-success {
+    background-color: black;
+}
+
 h1 {
     margin-bottom: 0;
+    color: white;
+}
+
+h2 {
+    color: white;
 }
 
 p {
     margin-right: 6em;
     font-weight: bold;
+    color: white;
 }
 
 img {
@@ -65,7 +76,12 @@ img {
         text-align: center;
     }
 
+    #player-form {
+        margin-top: 0;
+    }
+
     #players {
         margin-left: 0;
+        margin-top: 0;
     }
 }
