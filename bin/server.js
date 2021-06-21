@@ -14,7 +14,7 @@ app.use(express.static('public'));
 
 // Fired upon a connection from client.
 io.on('connect', (socket) => {
-    let playerName 
+    let playerName
 
     socket.emit('joined-players', joinedPlayers);
 
@@ -36,29 +36,29 @@ io.on('connect', (socket) => {
             }, time);
         };
 
-         //Change position after player clicks image.
+        //Change position after player clicks image.
         socket.on('player-clicks', () => {
 
             socket.broadcast.emit("disappear")
 
-            if(firstClick == false) {
+            if (firstClick == false) {
                 joinedPlayers[name] = joinedPlayers[name] + 1
 
                 firstClick = true;
 
-                if(round == TOTALROUNDS) {
+                if (round == TOTALROUNDS) {
                     const players = Object.keys(joinedPlayers);
                     const playerOne = players[0];
                     const playerTwo = players[1];
                     const scoreOne = joinedPlayers[playerOne];
                     const scoreTwo = joinedPlayers[playerTwo];
-                    
+
                     if (scoreOne > scoreTwo) {
-                       io.emit('winner', playerOne, scoreOne, TOTALROUNDS)
+                        io.emit('winner', playerOne, scoreOne, TOTALROUNDS)
                     } else if (scoreTwo > scoreOne) {
-                       io.emit('winner', playerTwo, scoreTwo, TOTALROUNDS);
+                        io.emit('winner', playerTwo, scoreTwo, TOTALROUNDS);
                     } else {
-                       io.emit('tie')
+                        io.emit('tie')
                     };
 
                     joinedPlayers = {};
@@ -69,7 +69,7 @@ io.on('connect', (socket) => {
                     let time = Math.random() * 3000 + 1000;
                     let positionY = Math.random() * 100;
                     let positionX = Math.random() * 100;
-                    
+
 
                     setTimeout(() => {
                         firstClick = false;

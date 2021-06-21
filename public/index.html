@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Virus Game</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virus Game</title>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
 
-	<link rel="stylesheet" href="assets/css/style.css">
-</head>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        
-        <form id="player-form" class="form-inline">
-            <h1 id="title">Eliminate the virus!</h1>
-            <p id="twoPlayers">2-player Game</p>
-            <div class="form-group">
-                <input type="text" class="form-control" id="name-entry" placeholder="Name">
-                <button type="submit" id="enter-game" class="btn btn-success">Join Game</button>
-            </div>
-        </form>
-
-        <div class="list-group" id="players">
-            <h2 id="title-online">Players online</h2>
-            <ul class="list-group" id="online-players"></ul>
+      <form id="player-form" class="form-inline">
+        <h1 id="title">Eliminate the virus!</h1>
+        <p id="twoPlayers">2-player Game</p>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="name-entry"
+            placeholder="Name"
+          />
+          <button type="submit" id="enter-game" class="btn btn-success">
+            Join Game
+          </button>
         </div>
+      </form>
 
-        <div id="virus-game">
+      <div class="list-group" id="players">
+        <h2 id="title-online">Players online</h2>
+        <ul class="list-group" id="online-players"></ul>
+      </div>
 
-        </div>
-
+      <div id="virus-game"></div>
     </div>
 
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="assets/js/client.js"></script>
-</body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="assets/js/client.js"></script>
+  </body>
 </html>

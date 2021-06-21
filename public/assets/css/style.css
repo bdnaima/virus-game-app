@@ -1,87 +1,86 @@
 body {
-    background-color: green;
+  background-color: green;
 }
 .container {
-    background-image: url("../pictures/coronavirus.jpg");
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    border: 2px solid black;
-    border-radius: 20px;
-    padding: 16em;
+  background-image: url("../pictures/coronavirus.jpg");
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 16em;
 }
 
 #game-room {
-    max-width: 20em;
-    margin-bottom: 18em;
+  max-width: 20em;
+  margin-bottom: 18em;
 }
 
 #player-form {
-    flex-direction: column;
-    margin-top: -5rem;
+  flex-direction: column;
+  margin-top: -5rem;
 }
 
 #users {
-    border: 1px solid black;
-    width: 20em;
+  border: 1px solid black;
+  width: 20em;
 }
 
 #name-entry {
-    margin-bottom: 2px;
-    margin-right: 1em;
+  margin-bottom: 2px;
+  margin-right: 1em;
 }
 
 #players {
-    border: 2px solid black;
-    border-radius: 20px;
-    margin-left: 2em;
-    padding: 2em;
-    color: white;
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-left: 2em;
+  padding: 2em;
+  color: white;
 }
 
 .form-group {
-    margin-top: 5em;
+  margin-top: 5em;
 }
 
 .btn-success {
-    background-color: black;
+  background-color: black;
 }
 
 h1 {
-    margin-bottom: 0;
-    color: white;
+  margin-bottom: 0;
+  color: white;
 }
 
 h2 {
-    color: white;
+  color: white;
 }
 
 p {
-    margin-right: 6em;
-    font-weight: bold;
-    color: white;
+  margin-right: 6em;
+  font-weight: bold;
+  color: white;
 }
 
 img {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 0;
+    padding-bottom: 10em;
+    text-align: center;
+  }
 
-@media screen and (max-width : 768px) {
-    .container {
-        flex-direction: column;
-        padding: 0;
-        padding-bottom: 10em;
-        text-align: center;
-    }
+  #player-form {
+    margin-top: 0;
+  }
 
-    #player-form {
-        margin-top: 0;
-    }
-
-    #players {
-        margin-left: 0;
-        margin-top: 0;
-    }
+  #players {
+    margin-left: 0;
+    margin-top: 0;
+  }
 }
